@@ -1,0 +1,133 @@
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="First name" formControlName="firstName">
+            <mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.controls['firstName'].hasError('minlength') || 
+            addressForm.controls['firstName'].hasError('maxlength')">
+            First Name needs to be 3-16 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Last name" formControlName="lastName">
+            <mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.controls['lastName'].hasError('minlength') || 
+            addressForm.controls['lastName'].hasError('maxlength')">
+            Last Name needs to be 3-16 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Street" formControlName="street"></textarea>
+            <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+              Street is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Str. Number" type="number" ondrop="return false" onpaste="return false"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number">
+            <mat-error *ngIf="addressForm.controls['number'].hasError('required')">
+              Str. Number is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Postal Code" type="number" ondrop="return false" onpaste="return false"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode">
+            <mat-error *ngIf="addressForm.controls['postalCode'].hasError('required')">
+              Postal Code is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.controls['postalCode'].hasError('minlength') ||
+                              addressForm.controls['postalCode'].hasError('maxlength')">
+              Postal Code must be <strong>5</strong> numbers.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="City" formControlName="city">
+            <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+              City is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <span class="spacer"></span>
+        <div class="col">
+          <mat-radio-group formControlName="gender">
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button value="female">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="email" matInput placeholder="E-mail" formControlName="email" email>
+            <mat-hint>
+              E-mail will be used for sign-in.
+            </mat-hint>
+            <mat-error *ngIf="addressForm.controls['email'].hasError('email')">
+              E-mail is <strong>not valid</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.controls['email'].hasError('required')">
+              E-mail is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Password" formControlName="password">
+            <mat-error *ngIf="addressForm.controls['password'].hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="addressForm.controls['password'].hasError('minlength') || 
+            addressForm.controls['password'].hasError('maxlength')">
+              Password needs to be 5-12 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Confirm Password" formControlName="passwordConfirm">
+          
+          <mat-error *ngIf="addressForm.controls['passwordConfirm'].hasError('required')">
+            Password Confirmation is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="addressForm.controls['passwordConfirm'].hasError('compare')">
+            Password Confirmation <strong>wrong</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
