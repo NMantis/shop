@@ -100,15 +100,34 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput type="password" placeholder="Password" formControlName="password">
-            <mat-error *ngIf="addressForm.controls['password'].hasError('required')">
-              Password is <strong>required</strong>
+            <input matInput  #passwordWithValidation
+            [type]="inputType" type="password" 
+            placeholder="Password" 
+            formControlName="password" 
+            [formControl]="passwordComponentWithValidation.passwordFormControl">
+
+            <mat-hint align="end" aria-live="polite">
+              {{passwordWithValidation.value.length}} / 25
+            </mat-hint>
+
+           
+
+           <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">
+              Password is required
             </mat-error>
-            <mat-error *ngIf="addressForm.controls['password'].hasError('minlength') || 
-            addressForm.controls['password'].hasError('maxlength')">
-              Password needs to be 5-12 characters long.
+            <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">
+              Password is not valid
             </mat-error>
+
           </mat-form-field>
+          <mat-password-strength #passwordComponentWithValidation
+                                  (onStrengthChanged)="onStrengthChanged($event)"
+                                  [password]="passwordWithValidation.value">
+          </mat-password-strength>
+          <mat-password-strength-info
+            
+            [passwordComponent]="passwordComponentWithValidation">
+          </mat-password-strength-info>
         </div>
 
         <div class="col">

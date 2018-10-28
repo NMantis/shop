@@ -18,7 +18,7 @@ import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher
 } from '@angular/material';
-
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -44,6 +44,7 @@ const routes: Routes = [
     CompareValidatorDirective
   ],
   imports: [
+    MatPasswordStrengthModule.forRoot(),
     MatProgressBarModule,
     ReactiveFormsModule,
     MatSlideToggleModule,

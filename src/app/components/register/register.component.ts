@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import {Title} from '@angular/platform-browser';
+import {MatSlideToggleChange} from '@angular/material';
 import { compareValidator } from '../../directives/compare-validator.directive';
 
 @Component({
@@ -8,7 +9,7 @@ import { compareValidator } from '../../directives/compare-validator.directive';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent  implements OnInit {
 
 
   addressForm = this.fb.group({
@@ -23,15 +24,29 @@ export class RegisterComponent {
     ]],
     gender: [null, Validators.required],
     email: [null, Validators.required],
-    password: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(12) ]],
+    password: [null, Validators.required],
     passwordConfirm: ['', [Validators.required, compareValidator('password')]]
   });
 
-  constructor(private fb: FormBuilder) {}
+  password: string;
+  inputType = 'password';
+  color = '';
+  constructor(private fb: FormBuilder,
+              private titleService: Title) {}
 
 
 
+  ngOnInit() {
+    this.titleService.setTitle('Home | @angular-material-extensions/password-strength');
+  }
 
+  onStrengthChanged(strength: number) {
+    console.log('password strength = ', strength);
+  }
+
+  onSlideToggleChange(event: MatSlideToggleChange) {
+    event.checked ? this.inputType = 'text' : this.inputType = 'password';
+  }
  onSubmit() {
     alert('Thanks!');
   }
