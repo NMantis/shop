@@ -1,13 +1,9 @@
 
-
-
-
-
 <mat-card>    
     <!-- Title of an Card -->    
     <mat-card-title>    
         <h2>Login</h2> 
-        <img src="../../assets/images/prf.PNG" class="avatar">
+        <img src="../../assets/images/user.png" class="avatar">
         
     </mat-card-title>    
     
@@ -17,14 +13,14 @@
                 <tr>    
                     <td>    
                         <mat-form-field class="demo-full-width">    
-                            <input matInput placeholder="Username" name="username" ngModel required>    
+                            <input type="email" matInput placeholder="E-mail" name="email" ngModel #email required>    
                         </mat-form-field>    
                     </td>  
                 </tr>
                   <tr> 
                     <td>    
                         <mat-form-field class="demo-full-width">    
-                            <input matInput type="password" placeholder="Password" name="password" ngModel required>    
+                            <input matInput type="password" placeholder="Password" name="password" ngModel #pwd required>    
                         </mat-form-field>    
                     </td>    
                 </tr>                    
@@ -35,7 +31,7 @@
                 </tr>    
                 <tr>    
                     <td colspan="3" class="content-center">    
-                        <button mat-raised-button type="submit" class="but1">Sign In</button>       
+                        <button mat-raised-button type="submit" (click)="checkLogin(email.value, pwd.value)" class="but1">Sign In</button>       
                         <button mat-raised-button (click)="goBack()" class="but2" >Back</button>  
                     </td>    
                 </tr>  

@@ -32,3 +32,8 @@ input::-webkit-inner-spin-button {
 .col:last-child {
   margin-right: 0;
 }
+
+.reg-btn{
+  background-color: #ff3e05;
+}
+

@@ -1,0 +1,51 @@
+<div class="mat-elevation-z8">
+  <mat-card>
+
+
+    <table mat-table class="full-width-table" [dataSource]="dataSource" aria-label="Elements">
+      <!-- Id Column -->
+      <ng-container matColumnDef="street">
+        <th mat-header-cell *matHeaderCellDef><strong>Street</strong></th>
+        <td mat-cell *matCellDef="let row">{{row.street | uppercase}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef><strong>Number</strong></th>
+        <td mat-cell *matCellDef="let row">{{row.number}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef><strong>City</strong></th>
+        <td mat-cell *matCellDef="let row">{{row.city | uppercase}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="postalcode">
+        <th mat-header-cell *matHeaderCellDef><strong>Zip Code</strong></th>
+        <td mat-cell *matCellDef="let row">{{row.postalcode}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef><strong>Edit/Delete</strong></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="editAddress(row.id, row.street, row.postalcode, row.number, row.city)">
+            <mat-icon aria-label="edit">create</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteAddress(row.id)">
+            <mat-icon aria-label="delete">clear</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator 
+                [length]="length" 
+                [pageSize]="pageSize" 
+                [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+  </mat-card>
+</div>

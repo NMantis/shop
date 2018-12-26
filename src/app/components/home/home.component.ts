@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import * as jwt_decode from 'jwt-decode';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +14,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+user = {};
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
+
+  constructor(private breakpointObserver: BreakpointObserver,
+    private cookie: CookieService,
+    private userService: UserService) {
+
+      if (this.cookie.check('auth')) {
+         const tok = jwt_decode(this.cookie.get('auth'));
+         this.userService.getUserInfo(tok.userId)
+          .subscribe(res => {
+           this.user = { firstname: res.firstname, lastname: res.lastname } ;
+            return this.user;
+          });
+        }
+  }
+
 
   ngOnInit() {
+
   }
+
+  userLogout() {
+    this.cookie.delete('auth');
+    window.location.reload();
+  }
+
 
 }

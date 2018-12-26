@@ -1,4 +1,13 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="addressForm" novalidate 
+      (ngSubmit)="onSubmit(email.value,
+                          firstname.value,
+                          lastname.value, 
+                          passwordWithValidation.value,
+                          street.value,
+                          number.value,
+                          postalCode.value,
+                          city.value,
+                          gender.value)">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>User Information</mat-card-title>
@@ -7,7 +16,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName">
+            <input matInput placeholder="First name" formControlName="firstName" #firstname>
             <mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
               First name is <strong>required</strong>
             </mat-error>
@@ -19,7 +28,7 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName">
+            <input matInput placeholder="Last name" formControlName="lastName" #lastname>
             <mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
               Last name is <strong>required</strong>
             </mat-error>
@@ -33,7 +42,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Street" formControlName="street"></textarea>
+            <textarea matInput placeholder="Street" formControlName="street" #street></textarea>
             <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
               Street is <strong>required</strong>
             </mat-error>
@@ -42,7 +51,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Str. Number" type="number" ondrop="return false" onpaste="return false"
-              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number">
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number" #number>
             <mat-error *ngIf="addressForm.controls['number'].hasError('required')">
               Str. Number is <strong>required</strong>
             </mat-error>
@@ -51,7 +60,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Postal Code" type="number" ondrop="return false" onpaste="return false"
-              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode">
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode" #postalCode>
             <mat-error *ngIf="addressForm.controls['postalCode'].hasError('required')">
               Postal Code is <strong>required</strong>
             </mat-error>
@@ -65,7 +74,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="City" formControlName="city">
+            <input matInput placeholder="City" formControlName="city" #city>
             <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
               City is <strong>required</strong>
             </mat-error>
@@ -73,7 +82,7 @@
         </div>
         <span class="spacer"></span>
         <div class="col">
-          <mat-radio-group formControlName="gender">
+          <mat-radio-group formControlName="gender" #gender>
             <mat-radio-button value="male">Male</mat-radio-button>
             <mat-radio-button value="female">Female</mat-radio-button>
           </mat-radio-group>
@@ -83,7 +92,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input type="email" matInput placeholder="E-mail" formControlName="email" email>
+            <input type="email" matInput placeholder="E-mail" formControlName="email" email #email>
             <mat-hint>
               E-mail will be used for sign-in.
             </mat-hint>
@@ -104,8 +113,8 @@
             [type]="inputType" type="password" 
             placeholder="Password" 
             formControlName="password" 
-            [formControl]="passwordComponentWithValidation.passwordFormControl">
-
+            >
+            
             <mat-hint align="end" aria-live="polite">
               {{passwordWithValidation.value.length}} / 25
             </mat-hint>
@@ -132,7 +141,7 @@
 
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput type="password" placeholder="Confirm Password" formControlName="passwordConfirm">
+            <input matInput  type="password" placeholder="Confirm Password" formControlName="passwordConfirm">
           
           <mat-error *ngIf="addressForm.controls['passwordConfirm'].hasError('required')">
             Password Confirmation is <strong>required</strong>
@@ -146,7 +155,10 @@
 
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button 
+              class="reg-btn"
+              type="submit"
+              [disabled]="addressForm.invalid || addressForm.pristine">Submit</button>   
     </mat-card-actions>
   </mat-card>
 </form>

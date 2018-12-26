@@ -4,6 +4,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatMenuModule,
@@ -14,9 +15,11 @@ import {
   MatDatepickerModule, MatNativeDateModule,
   MatRadioModule, MatSelectModule,
   MatOptionModule, MatSlideToggleModule,
+  MatTableModule,
   MatProgressBarModule,
   ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher
+  ShowOnDirtyErrorStateMatcher,
+  MatSnackBarModule, MatPaginatorModule, MatSortModule
 } from '@angular/material';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { AppComponent } from './app.component';
@@ -26,12 +29,21 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
 
+import { UserService } from './services/user.service';
+import { CookieService } from 'ngx-cookie-service';
+import { MyOrdersComponent } from './components/users/my-orders/my-orders.component';
+import { MyAddressesComponent } from './components/users/my-addresses/my-addresses.component';
+import { MyAdrComponent } from './components/users/my-adr/my-adr.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: DashboardComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: '', redirectTo: 'home', pathMatch: 'full'}
+  { path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'my-addresses', component: MyAdrComponent},
+  { path: 'my-orders', component: MyOrdersComponent},
+
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
@@ -41,9 +53,14 @@ const routes: Routes = [
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    CompareValidatorDirective
+    CompareValidatorDirective,
+    MyOrdersComponent,
+    MyAddressesComponent,
+    MyAdrComponent
   ],
   imports: [
+    MatSnackBarModule,
+    HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
     MatProgressBarModule,
     ReactiveFormsModule,
@@ -60,7 +77,7 @@ const routes: Routes = [
     MatCheckboxModule,
     FormsModule,
     MatGridListModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'}),
     BrowserAnimationsModule,
     BrowserModule,
     LayoutModule,
@@ -68,9 +85,14 @@ const routes: Routes = [
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
+    CookieService,
+    UserService,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
   ],
   bootstrap: [AppComponent]
