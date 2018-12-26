@@ -5,6 +5,14 @@ import { Address } from '../../../models/address.model';
 import * as jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { map, mergeMap } from 'rxjs/operators';
+import { DialogComponent } from '../../dialog/dialog.component';
+import {MatDialog} from '@angular/material';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-my-adr',
   templateUrl: './my-adr.component.html',
@@ -20,9 +28,12 @@ export class MyAdrComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25];
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['street', 'number', 'city', 'postalcode', 'action'];
-
-  constructor(private userService: UserService,
-    private cookie: CookieService) {}
+  animal: string;
+  name: string;
+  constructor(
+    private userService: UserService,
+    private cookie: CookieService,
+    public dialog: MatDialog) {}
 
 
   ngOnInit() {
@@ -51,6 +62,14 @@ export class MyAdrComponent implements OnInit {
   }
 
   deleteAddress(id) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 }

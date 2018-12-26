@@ -14,3 +14,9 @@ th {
   font-size: 1em;
   color:black;
 }
+
+.btn{
+  margin-top:1%;
+  background-color:#680000;
+  color: #fff;
+}

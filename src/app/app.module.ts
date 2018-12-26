@@ -19,7 +19,8 @@ import {
   MatProgressBarModule,
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
-  MatSnackBarModule, MatPaginatorModule, MatSortModule
+  MatSnackBarModule, MatPaginatorModule,
+  MatSortModule, MatDialogModule
 } from '@angular/material';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MyOrdersComponent } from './components/users/my-orders/my-orders.component';
 import { MyAddressesComponent } from './components/users/my-addresses/my-addresses.component';
 import { MyAdrComponent } from './components/users/my-adr/my-adr.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 const routes: Routes = [
   { path: 'home', component: DashboardComponent},
@@ -56,9 +58,11 @@ const routes: Routes = [
     CompareValidatorDirective,
     MyOrdersComponent,
     MyAddressesComponent,
-    MyAdrComponent
+    MyAdrComponent,
+    DialogComponent
   ],
   imports: [
+    MatDialogModule,
     MatSnackBarModule,
     HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
@@ -90,6 +94,7 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule
   ],
+  entryComponents: [ DialogComponent ],
   providers: [
     CookieService,
     UserService,
