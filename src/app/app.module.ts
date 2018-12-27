@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate  } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -22,6 +22,7 @@ import {
   MatSnackBarModule, MatPaginatorModule,
   MatSortModule, MatDialogModule
 } from '@angular/material';
+import { JwtModule } from '@auth0/angular-jwt';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -35,13 +36,18 @@ import { CookieService } from 'ngx-cookie-service';
 import { MyOrdersComponent } from './components/users/my-orders/my-orders.component';
 import { MyAdrComponent } from './components/users/my-adr/my-adr.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { AuthService } from './services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 const routes: Routes = [
   { path: 'home', component: DashboardComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'my-addresses', component: MyAdrComponent},
+  { path: 'my-addresses', component: MyAdrComponent, canActivate: [AuthService]},
   { path: 'my-orders', component: MyOrdersComponent},
 
   {path: '**', redirectTo: ''}
@@ -60,6 +66,8 @@ const routes: Routes = [
     DialogComponent
   ],
   imports: [
+    JwtModule.forRoot({config:
+      {tokenGetter: tokenGetter}}),
     MatDialogModule,
     MatSnackBarModule,
     HttpClientModule,
@@ -94,6 +102,8 @@ const routes: Routes = [
   ],
   entryComponents: [ DialogComponent ],
   providers: [
+    JwtHelperService,
+    AuthService,
     CookieService,
     UserService,
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

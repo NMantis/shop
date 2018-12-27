@@ -3,10 +3,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import { UserService } from '../../services/user.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,7 +23,8 @@ user = {};
 
   constructor(private breakpointObserver: BreakpointObserver,
     private cookie: CookieService,
-    private userService: UserService) {
+    private userService: UserService,
+    private router: Router) {
 
       if (this.cookie.check('auth')) {
          const tok = jwt_decode(this.cookie.get('auth'));
@@ -43,7 +43,8 @@ user = {};
 
   userLogout() {
     this.cookie.delete('auth');
-    window.location.reload();
+    this.user = { firstname: ''};
+    this.router.navigate(['home']);
   }
 
 

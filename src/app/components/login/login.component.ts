@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         window.location.reload();
         this.router.navigate(['/home']);
       }, err => {
-        console.log('Wrong combination');
+        console.log(err);
       });
   }
 
