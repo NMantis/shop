@@ -20,14 +20,13 @@ export class RegisterComponent  implements OnInit {
   password: string;
 
   addressForm = this.fb.group({
-    company: null,
-    firstName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
-    lastName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
-    street: [null, [Validators.required,  Validators.minLength(3), Validators.maxLength(16)]],
+    firstName: [null, [Validators.required, Validators.pattern('[a-zA-Z α-ωΑ-Ω΄όίήύώέάΆΈΊΌΎΉΏ]{3,16}')]],
+    lastName: [null, [Validators.required, Validators.pattern('[a-zA-Z α-ωΑ-Ω΄όίήύώέάΆΈΊΌΎΉΏ]{3,16}')]],
+    street: [null, [Validators.required, Validators.pattern('[a-zA-Z α-ωΑ-Ω΄όίήύώέάΆΈΊΌΎΉΏ]{3,16}')]],
     number: [null, Validators.required],
-    city: [null, [Validators.required,  Validators.minLength(3)]],
+    city: [null, [Validators.required, Validators.pattern('[a-zA-Z α-ωΑ-Ω΄όίήύώέάΆΈΊΌΎΉΏ]{3,16}')]],
     postalCode: [null, [
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)
+      Validators.required, Validators.pattern('[0-9]{5}')
     ]],
     gender: [null, Validators.required],
     email: [null, Validators.required],

@@ -33,7 +33,6 @@ import { CompareValidatorDirective } from './directives/compare-validator.direct
 import { UserService } from './services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MyOrdersComponent } from './components/users/my-orders/my-orders.component';
-import { MyAddressesComponent } from './components/users/my-addresses/my-addresses.component';
 import { MyAdrComponent } from './components/users/my-adr/my-adr.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 
@@ -57,7 +56,6 @@ const routes: Routes = [
     RegisterComponent,
     CompareValidatorDirective,
     MyOrdersComponent,
-    MyAddressesComponent,
     MyAdrComponent,
     DialogComponent
   ],

@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
         this.cookie.set('auth', res.token, 900000);
         window.location.reload();
         this.router.navigate(['/home']);
+      }, err => {
+        console.log('Wrong combination');
       });
   }
 

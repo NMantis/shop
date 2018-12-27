@@ -1,11 +1,140 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
+<div *ngIf="data.action == 'delete'">
+  <div mat-dialog-content>
+    <p>Are you sure you want to delete this address?</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="deleteAddress()">Yes</button>
+    <button mat-button cdkFocusInitial (click)="closeDialog()">Ok</button>
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+
+
+<div *ngIf="msg">
+  <div mat-dialog-content>
+    <p>{{msg}}</p>
+  </div>
+  <button mat-button (click)="closeDialog()">Ok</button>
+</div>
+
+<div *ngIf="data.action == 'add'">
+  <mat-card>
+    <mat-card-title>
+      <p>New Address</p>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="addressForm" novalidate>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="Street" formControlName="street" #street></textarea>
+              <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+                Street is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Str. Number" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number" #number>
+              <mat-error *ngIf="addressForm.controls['number'].hasError('required')">
+                Str. Number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="City" formControlName="city" #city>
+              <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+                City is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Postal Code" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode"
+                #postalCode>
+              <mat-error *ngIf="addressForm.controls['postalCode'].hasError('required')">
+                Postal Code is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="addressForm.controls['postalCode'].hasError('minlength') ||
+                                addressForm.controls['postalCode'].hasError('maxlength')">
+                Postal Code must be <strong>5</strong> numbers.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button class="btn" (click)="onSubmit(street.value,number.value,postalCode.value,city.value)"
+        [disabled]="addressForm.invalid || addressForm.pristine">Submit</button>
+      <button mat-button class="btn" (click)="closeDialog()">Cancel</button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>
+
+<div *ngIf="data.action == 'edit'">
+  <mat-card>
+    <mat-card-title>
+      <p>New Address</p>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="addressForm" novalidate>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput value="{{data.street | uppercase}}" formControlName="street" #street>
+              <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+                Street is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput value="{{data.number}}" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number" #number>
+              <mat-error *ngIf="addressForm.controls['number'].hasError('required')">
+                Str. Number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput value="{{data.city}}" formControlName="city" #city>
+              <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+                City is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput value="{{data.postalCode}}" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode"
+                #postalCode>
+              <mat-error *ngIf="addressForm.controls['postalCode'].hasError('required')">
+                Postal Code is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="addressForm.controls['postalCode'].hasError('minlength') ||
+                                    addressForm.controls['postalCode'].hasError('maxlength')">
+                Postal Code must be <strong>5</strong> numbers.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button (click)="editAddress(street.value,postalCode.value,number.value,city.value)" class="btn"
+        [disabled]="addressForm.status=='INVALID' || addressForm.pristine">Submit</button>
+      <button mat-button class="btn" (click)="closeDialog()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
