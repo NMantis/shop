@@ -13,8 +13,13 @@ export class AuthService implements CanActivate {
               public router: Router,
               public jwtHelper: JwtHelperService) { }
 
+
+  getToken() {
+    return this.cookie.get('auth');
+  }
+
   isAuthenticated(): boolean {
-    const token = this.cookie.get('auth');
+    const token = this.getToken();
     // Check whether the token is expired and return
     // true or false
     return !this.jwtHelper.isTokenExpired(token);

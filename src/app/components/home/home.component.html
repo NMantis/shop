@@ -3,12 +3,12 @@
           <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
             [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
             <mat-toolbar>
-              <img src="../favicon.ico"> Menu</mat-toolbar>
+              <img src="../favicon.ico"> Menu </mat-toolbar>
             <mat-nav-list>
               <ul>
-                <li><a mat-list-item href="#">Link 1</a></li>
-                <li><a mat-list-item href="#">Link 2</a></li>
-                <li><a mat-list-item href="#">Link 3</a></li>
+                <li><a mat-list-item routerLink="/products/men">Men's Shoes</a></li>
+                <li><a mat-list-item routerLink="/products/women">Women's Shoes</a></li>
+                <li><a mat-list-item routerLink="/products/kids">Kids' Shoes</a></li>
               </ul>
             </mat-nav-list>
           </mat-sidenav>
@@ -17,7 +17,7 @@
               <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
               </button>
-              <span>Shop</span>
+              <span>Shoe-Shop</span>
               <span class="spacer"></span>
       
       
