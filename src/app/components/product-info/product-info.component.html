@@ -1,0 +1,33 @@
+<mat-card class="info-card">
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>{{product.name | uppercase}}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-car">
+      <mat-grid-tile>
+        <div><img src='{{ product.productImage }}' width="300 px" max-height="268 px"></div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <textarea rows="12" cols="45" readonly>{{product.description}} </textarea>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <h4>Price: {{ product.price }} €</h4>
+      </mat-grid-tile>
+
+    </mat-card-content>
+
+    <mat-grid-tile>
+      <mat-card-actions align="end">
+        <button mat-icon-button>+
+          <mat-icon aria-label="Cart">shopping_cart</mat-icon>
+        </button>
+        
+      </mat-card-actions>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</mat-card>

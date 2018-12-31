@@ -36,6 +36,7 @@ import { MyAdrComponent } from './components/users/my-adr/my-adr.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ProductInfoComponent } from './components/product-info/product-info.component';
 
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
 import { UserService } from './services/user.service';
@@ -44,6 +45,7 @@ import { AuthService } from './services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenInterceptor } from './services/token.interceptor';
 import { ProductService } from './services/product.service';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -58,6 +60,7 @@ const routes: Routes = [
   { path: 'my-orders', component: MyOrdersComponent},
   { path: 'pnf', component: PageNotFoundComponent },
   { path: 'products/:opt', component: ProductsComponent },
+  { path: 'product/:id', component: ProductInfoComponent },
 
   {path: '**', redirectTo: 'pnf'}
 ];
@@ -74,7 +77,8 @@ const routes: Routes = [
     MyAdrComponent,
     DialogComponent,
     PageNotFoundComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductInfoComponent
   ],
   imports: [
     JwtModule.forRoot({config:

@@ -5,13 +5,13 @@ import { map, switchMap} from 'rxjs/operators';
 import { Product } from '../../models/product.model';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-product-info',
+  templateUrl: './product-info.component.html',
+  styleUrls: ['./product-info.component.css']
 })
-export class ProductsComponent implements OnInit {
-  options: any;
-  products: Product[];
+export class ProductInfoComponent implements OnInit {
+  id: any;
+  product: Product = new Product();
   constructor(
               private route: ActivatedRoute,
               private productService: ProductService,
@@ -21,15 +21,16 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.route.params
     .pipe(
-      map(params => this.options = params.opt),
+      map(params => this.id = params.id),
       switchMap(result => {
-       return this.productService.getProductsByCat(this.options);
+       return this.productService.getProductsById(this.id);
       })
     )
-    .subscribe((data: Product[]) => {
-      this.products = data;
+    .subscribe((data: Product) => {
+      this.product = data;
     }, err => {
         this.router.navigate(['\pnf']);
     });
   }
+
 }
