@@ -15,5 +15,42 @@
   .btn{
     background-color:#680000;
     color: #fff;
+    margin: 10px;
   }
-  
+
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  mat-icon {
+    margin-right: 26%;
+    font-size:50px;
+    padding-left:20%;
+  }
+
+  mat-icon:hover {
+    cursor: pointer;
+  }
+ 
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+textarea {
+  border:none;
+  resize: none;
+  overflow: hidden;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+textarea:hover{
+    overflow: auto;
+}

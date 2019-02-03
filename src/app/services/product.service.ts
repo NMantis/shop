@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class ProductService {
       category: category
     };
     return this.http.post<any>(`${this.uri}/product/`, product);
+  }
+
+  editProduct( product: Product ) {
+    return this.http.patch(`${this.uri}/product/${product._id}`, product);
   }
 
   deleteProduct(id) {

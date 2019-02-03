@@ -1,0 +1,10 @@
+<div class="adm-pnl">
+
+<mat-grid-list cols="2" rowHeight="100px">
+    <mat-grid-tile colspan="2"> <h2>Welcome Admin </h2></mat-grid-tile>
+    <mat-grid-tile > <button mat-raised-button class="grid-btn" (click)="getOrders()"> View Orders </button></mat-grid-tile>
+    <mat-grid-tile > <button mat-raised-button class="grid-btn" (click)="getProducts()"> View Products </button></mat-grid-tile>
+</mat-grid-list>
+<app-orders [ords]="showOrd"></app-orders>
+<app-product-list [prods]="showProd"></app-product-list> 
+</div>

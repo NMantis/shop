@@ -11,7 +11,7 @@
       </mat-grid-tile>
 
       <mat-grid-tile>
-        <textarea rows="12" cols="45" readonly>{{product.description}} </textarea>
+        <textarea rows="14" cols="48" readonly>{{product.description}} </textarea>
       </mat-grid-tile>
 
       <mat-grid-tile>
@@ -22,9 +22,13 @@
 
     <mat-grid-tile>
       <mat-card-actions align="end">
-        <button mat-icon-button>+
-          <mat-icon aria-label="Cart">shopping_cart</mat-icon>
-        </button>
+        <div *ngIf="!added">
+          <button mat-raised-button class="btn_cart" (click)="add(counter.value)">+
+          <mat-icon aria-hidden="true">shopping_cart</mat-icon>
+          <span style="display: inline">Add to Cart</span>
+          </button>
+        </div>
+
         
       </mat-card-actions>
     </mat-grid-tile>

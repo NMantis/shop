@@ -1,0 +1,67 @@
+<table mat-table [dataSource]="products" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="num">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let product; let i = index" style="width: 5%"> {{i+1}} </td>
+        <td mat-footer-cell *matFooterCellDef> 
+            <button mat-raised-button 
+                    style="background-color: #680000;font-weight: bold" 
+                    (click)="deleteAll()">Clear Cart</button>
+        </td>
+      </ng-container>
+
+
+    <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let product"> <img src= " {{product.productImage}} " ></td>
+        <td mat-footer-cell *matFooterCellDef>   </td>
+      </ng-container>
+
+
+    <ng-container matColumnDef="item">
+      <th mat-header-cell *matHeaderCellDef> Item </th>
+      <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+      <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let product">
+            <button mat-icon-button (click)="updateCart(product, -1)">
+                <mat-icon>remove</mat-icon>
+            </button>
+             {{product.quantity}}
+             <button mat-icon-button (click)="updateCart(product, 1)">
+                <mat-icon>add</mat-icon>
+            </button>
+            </td>
+        <td mat-footer-cell *matFooterCellDef>   </td>
+      </ng-container>
+  
+    <!-- Cost Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Cost </th>
+      <td mat-cell *matCellDef="let product"> {{product.price * product.quantity | currency}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell  *matCellDef="let product; let i = index"> 
+            <button mat-icon-button (click)="deleteProd(i)">
+                <mat-icon aria-label="delete">clear</mat-icon>
+              </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+                <button mat-raised-button 
+                style="background-color: #680000;font-weight: bold" 
+                [disabled]="isEmpty"
+                routerLink="/cashout"
+                >Checkout</button> 
+        </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  </table>

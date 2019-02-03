@@ -1,7 +1,11 @@
 export class Product {
     name: String;
     description: String;
-    price: Number;
+    price: number;
     _id: String;
     productImage: String;
+    active: Boolean;
+    category: String;
+    quantity: number;
+    stock: number;
 }

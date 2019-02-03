@@ -138,3 +138,138 @@
     </mat-card-actions>
   </mat-card>
 </div>
+
+
+
+<div *ngIf="data.action == 'addProd'">
+    <mat-card>
+        <mat-card-title>
+          <p>New Product</p>
+        </mat-card-title>
+        <mat-card-content>
+          <form [formGroup]="productForm" novalidate>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <textarea matInput placeholder="Name" formControlName="name"></textarea>
+                  <mat-error *ngIf="productForm.controls['name'].hasError('required')">
+                    Name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Price" type="number" ondrop="return false" onpaste="return false"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="price">
+                  <mat-error *ngIf="productForm.controls['price'].hasError('required')">
+                    Price is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Category" formControlName="category" >
+                  <mat-error *ngIf="productForm.controls['category'].hasError('required')">
+                    Category is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+    
+        <mat-card-actions>
+          <h5>Upload File</h5>
+            <input id="label_test" type="file" class="inputfile">
+            <label  for="file" onclick="document.getElementById('label_test').click();"><mat-icon>cloud_upload</mat-icon></label>
+          <button mat-raised-button class="btn">Submit</button>
+          <button mat-button class="btn" (click)="closeDialog()">Cancel</button>
+        </mat-card-actions>
+    
+      </mat-card>
+</div>
+
+
+<div *ngIf="data.action == 'editProd'">
+  <mat-card>
+    <mat-card-title>
+      <p>Edit Product</p>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="productForm" novalidate>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+                <label for="name" ><h5>Name</h5></label> 
+              <textarea matInput value="{{data.name | uppercase}}" formControlName="name" #name></textarea>
+              <mat-error *ngIf="productForm.controls['name'].hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field style="width: 30%;">
+                <label for="price" ><h5>Price</h5></label> 
+              <input matInput value="{{data.price}}" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="price" #price>
+                <span matSuffix>$</span>
+              <mat-error *ngIf="productForm.controls['price'].hasError('required')">
+                Price is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+                <label for="stock" ><h5>Stock</h5></label> 
+              <input matInput value="{{data.stock }}" type="number" ondrop="return false" onpaste="return false"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="stock" #stock>
+              <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
+                Stock is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="category" ><h5>Category</h5></label> 
+            <mat-form-field class="full-width">
+              <mat-select #category [placeholder]="data.category">
+                <mat-option value="Men" >Men</mat-option>
+                <mat-option value="Women">Women</mat-option>
+                <mat-option value="Kids">Kids</mat-option>
+              </mat-select>
+              <mat-error *ngIf="productForm.controls['category'].hasError('required')">
+                Category is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+                <label for="description" ><h5>Description</h5></label> 
+              <textarea rows= "4" matInput value="{{data.description }}" formControlName="description" #description></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <h5>Upload File</h5>
+        <input id="label_test" type="file" class="inputfile">
+        <label  for="file" onclick="document.getElementById('label_test').click();"><mat-icon>cloud_upload</mat-icon></label>
+      <button mat-raised-button
+              class="btn"
+              (click)="editProduct(price.value, description.value, category.value, stock.value, name.value)"
+              >Submit</button>
+      <button mat-button class="btn" (click)="closeDialog()">Cancel</button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

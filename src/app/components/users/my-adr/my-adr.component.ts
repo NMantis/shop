@@ -41,7 +41,8 @@ export class MyAdrComponent implements OnInit {
               street: street,
               postalCode: postalCode,
               number: number,
-              city: city
+              city: city,
+              from: 'addr'
             }
     });
 
@@ -51,7 +52,7 @@ export class MyAdrComponent implements OnInit {
   deleteAddressDialog(id) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
-      data: { action: 'delete' , id: id}
+      data: { action: 'delete' , id: id, from: 'addr' }
     });
 
     dialogRef.afterClosed().subscribe(result => this.getAddresses());
@@ -64,7 +65,8 @@ export class MyAdrComponent implements OnInit {
               street: null,
               postalCode: null,
               number: null,
-              city: null}
+              city: null,
+              from: 'addr'}
     });
 
     dialogRef.afterClosed().subscribe(result => this.getAddresses());

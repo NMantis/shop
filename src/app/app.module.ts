@@ -16,12 +16,13 @@ import {
   MatDatepickerModule, MatNativeDateModule,
   MatRadioModule, MatSelectModule,
   MatOptionModule, MatSlideToggleModule,
+  MatChipsModule,
   MatTableModule,
   MatProgressBarModule,
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
   MatSnackBarModule, MatPaginatorModule,
-  MatSortModule, MatDialogModule
+  MatSortModule, MatDialogModule, MatBadgeModule
 } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
@@ -37,6 +38,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductInfoComponent } from './components/product-info/product-info.component';
+import { CartComponent } from './components/orders/cart/cart.component';
+import { CashoutComponent } from './components/orders/cashout/cashout.component';
 
 import { CompareValidatorDirective } from './directives/compare-validator.directive';
 import { UserService } from './services/user.service';
@@ -45,6 +48,10 @@ import { AuthService } from './services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenInterceptor } from './services/token.interceptor';
 import { ProductService } from './services/product.service';
+import { RoleGuardService as RoleGuard } from './services/role-guard.service';
+import { PanelComponent } from './components/admin/panel/panel.component';
+import { OrdersComponent } from './components/admin/orders/orders.component';
+import { ProductListComponent } from './components/admin/product-list/product-list.component';
 
 
 export function tokenGetter() {
@@ -61,7 +68,9 @@ const routes: Routes = [
   { path: 'pnf', component: PageNotFoundComponent },
   { path: 'products/:opt', component: ProductsComponent },
   { path: 'product/:id', component: ProductInfoComponent },
-
+  { path: 'cart', component: CartComponent },
+  { path: 'cashout', component: CashoutComponent },
+  { path: 'panel', component: PanelComponent, canActivate: [RoleGuard],  data: { expectedRole: '_admin0'} },
   {path: '**', redirectTo: 'pnf'}
 ];
 
@@ -78,11 +87,18 @@ const routes: Routes = [
     DialogComponent,
     PageNotFoundComponent,
     ProductsComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    CartComponent,
+    CashoutComponent,
+    PanelComponent,
+    OrdersComponent,
+    ProductListComponent
   ],
   imports: [
     JwtModule.forRoot({config:
       {tokenGetter: tokenGetter}}),
+      MatBadgeModule,
+      MatChipsModule,
     MatDialogModule,
     MatSnackBarModule,
     HttpClientModule,

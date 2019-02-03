@@ -38,7 +38,7 @@
  .bd {
     width: 100%;
     background-image: url('../../../assets/images/back1.PNG');
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover; 
     position: absolute;
     min-height: 100% !important;
@@ -75,4 +75,5 @@
   ul li a:hover {
     background-color: #680000;
   }
+
 

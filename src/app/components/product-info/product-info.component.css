@@ -18,3 +18,22 @@
   textarea:hover{
       overflow: auto;
   }
+
+  .btn_cart {
+    display: block;
+    background-color: #680000;
+  }
+
+  .quantity {
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+    
+  }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

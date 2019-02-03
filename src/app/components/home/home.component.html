@@ -9,6 +9,7 @@
                 <li><a mat-list-item routerLink="/products/men">Men's Shoes</a></li>
                 <li><a mat-list-item routerLink="/products/women">Women's Shoes</a></li>
                 <li><a mat-list-item routerLink="/products/kids">Kids' Shoes</a></li>
+                <li *ngIf="isAdmin" style="background-color:cadetblue"><a mat-list-item routerLink="/panel">Admin Panel</a></li>
               </ul>
             </mat-nav-list>
           </mat-sidenav>
@@ -19,7 +20,6 @@
               </button>
               <span>Shoe-Shop</span>
               <span class="spacer"></span>
-      
       
               <button mat-raised-button 
                 *ngIf="!user.firstname; else elseBlock"
@@ -43,8 +43,8 @@
                 </ng-template>
       
       
-              <button mat-icon-button>
-                <mat-icon aria-label="Cart">shopping_cart</mat-icon>
+              <button mat-icon-button routerLink="/cart">
+                <mat-icon aria-label="Cart" [matBadge]="cartCount" matBadgeColor="warn">shopping_cart</mat-icon>
               </button>
             </mat-toolbar>
            

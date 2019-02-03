@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   checkLogin(email, password) {
     this.userService.userLogin(email, password)
       .subscribe(res => {
-        this.cookie.set('auth', res.token, 900000);
+        this.cookie.set('auth', res.token, 90000000);
         window.location.reload();
         this.router.navigate(['/home']);
       }, err => {

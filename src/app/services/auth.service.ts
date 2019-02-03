@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 
@@ -22,7 +22,10 @@ export class AuthService implements CanActivate {
     const token = this.getToken();
     // Check whether the token is expired and return
     // true or false
-    return !this.jwtHelper.isTokenExpired(token);
+    if (token !== null) {
+      return !this.jwtHelper.isTokenExpired(token);
+    }
+   return false;
   }
 
   canActivate(): boolean {

@@ -1,0 +1,14 @@
+.adm-pnl {
+    background-color: white;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin: 5%;
+    border: 5px outset rgba(141, 0, 0, 0.53);
+    border-radius: 40px 40px 40px 40px;
+}
+
+.grid-btn {
+    background-color: #680000;
+    font-weight: bold;
+}

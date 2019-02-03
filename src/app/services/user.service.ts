@@ -67,4 +67,8 @@ export class UserService {
   deleteAddress(id) {
     return this.http.delete(`${this.uri}/address/${id}`);
   }
+
+  getAddressById(id) {
+    return this.http.get<any>(`${this.uri}/address/adr/${id}`);
+  }
 }

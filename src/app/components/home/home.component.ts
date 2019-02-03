@@ -1,11 +1,14 @@
 import { Component, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import * as jwt_decode from 'jwt-decode';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { RoleGuardService } from '../../services/role-guard.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,7 +16,9 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-user = {};
+cartCount: number;
+private user = {};
+private isAdmin: Boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -24,7 +29,9 @@ user = {};
   constructor(private breakpointObserver: BreakpointObserver,
     private cookie: CookieService,
     private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    private cartService: CartService,
+    private role: RoleGuardService) {
 
       if (this.cookie.check('auth')) {
          const tok = jwt_decode(this.cookie.get('auth'));
@@ -34,17 +41,29 @@ user = {};
             return this.user;
           });
         }
+
+        this.isAdmin = this.role.isAdmin();
   }
 
-
   ngOnInit() {
-
+    const test = this.cartService.getCartItems();
+    if (test) {
+      this.cartCount = test.length;
+    } else {
+     this.cartCount = 0;
+    }
+            this.cartService.getCount().subscribe(value => {
+            this.cartCount = value;
+        });
   }
 
   userLogout() {
+    this.cartService.removeAll();
+    this.cartCount = 0;
     this.cookie.delete('auth');
     this.user = { firstname: ''};
     this.router.navigate(['home']);
+    this.isAdmin = this.role.isAdmin();
   }
 
 
