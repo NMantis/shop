@@ -63,6 +63,19 @@ export class CashoutComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => this.getAddresses());
   }
 
+  guestInfoDialog(method) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { action: 'guestOrder' ,
+              method: method,
+              products: this.products,
+              from: 'guestCart'
+            }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.route.navigate(['home']);
+    });
+  }
+
   goBack() {
     this.location.back();
   }

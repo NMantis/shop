@@ -16,7 +16,7 @@ import { RoleGuardService } from '../../services/role-guard.service';
 })
 export class HomeComponent implements OnInit {
 
-cartCount: number;
+cartCount: any;
 private user = {};
 private isAdmin: Boolean;
 
@@ -43,18 +43,12 @@ private isAdmin: Boolean;
         }
 
         this.isAdmin = this.role.isAdmin();
+
+        this.cartService.getCount().subscribe(value => { this.cartCount = value; });
   }
 
   ngOnInit() {
-    const test = this.cartService.getCartItems();
-    if (test) {
-      this.cartCount = test.length;
-    } else {
-     this.cartCount = 0;
-    }
-            this.cartService.getCount().subscribe(value => {
-            this.cartCount = value;
-        });
+
   }
 
   userLogout() {

@@ -22,10 +22,11 @@ import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
   MatSnackBarModule, MatPaginatorModule,
-  MatSortModule, MatDialogModule, MatBadgeModule
+  MatSortModule, MatDialogModule, MatBadgeModule, MatDividerModule
 } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -52,6 +53,7 @@ import { RoleGuardService as RoleGuard } from './services/role-guard.service';
 import { PanelComponent } from './components/admin/panel/panel.component';
 import { OrdersComponent } from './components/admin/orders/orders.component';
 import { ProductListComponent } from './components/admin/product-list/product-list.component';
+import { SafePipe } from './directives/safe.pipe';
 
 
 export function tokenGetter() {
@@ -92,7 +94,8 @@ const routes: Routes = [
     CashoutComponent,
     PanelComponent,
     OrdersComponent,
-    ProductListComponent
+    ProductListComponent,
+    SafePipe
   ],
   imports: [
     JwtModule.forRoot({config:
@@ -117,6 +120,7 @@ const routes: Routes = [
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
+    FileUploadModule,
     MatGridListModule,
     RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'}),
     BrowserAnimationsModule,
@@ -127,6 +131,7 @@ const routes: Routes = [
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule

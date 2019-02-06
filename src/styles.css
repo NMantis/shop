@@ -17,3 +17,10 @@ img {
 .spacer {
   flex: 1 1 auto;
 }
+
+.cart-snackbar {
+  opacity: 1;
+  font-size: 18px;
+  font-weight: bold;
+
+}

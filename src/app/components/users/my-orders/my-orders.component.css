@@ -1,10 +1,18 @@
 table {
-  width: 100%;
+  width: 90%;
+  margin: 4%;
+  text-align: center;
+}
+
+td:hover {
+  cursor: pointer;
 }
 
 th {
+  background-color: #101010;
+  color: white;
   font-weight: bold;
-  color: black;
+  text-align: center;
   font-size: 14px;
 }
 

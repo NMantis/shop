@@ -5,7 +5,7 @@
   <ng-container matColumnDef="Order Code" >
     <th mat-header-cell *matHeaderCellDef> Order Code </th>
     <td mat-cell *matCellDef="let element"> {{element._id}} </td>
-  </ng-container>
+  </ng-container> 
 
   <ng-container matColumnDef="Method" >
       <th mat-header-cell *matHeaderCellDef> Method </th>
@@ -33,8 +33,8 @@
       <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         
           <table >
-            <tr *ngFor="let row of element.products">
-                <td> <img src= " {{row.productImage}} " ><td> 
+            <tr *ngFor="let row of element.products; let i = index">
+                <td> <img [src]= " element.products[i].productImage | safe " ><td> 
                 <td> {{ row.name}} x {{ row.quantity }}  </td>
                 <td> {{ row.price * row.quantity | currency}} </td> 
                 
@@ -45,16 +45,12 @@
           <div class="example-element-name"> {{element.name}} </div>
           <div class="example-element-weight"> {{element.weight}} </div>
         
-        <div class="example-element-description">
-          {{element.description}}
-          <span class="example-element-description-attribution"> -- Wikipedia </span>
-        </div>
       </div>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" style="cursor: pointer;"
     [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>

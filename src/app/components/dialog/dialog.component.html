@@ -13,7 +13,7 @@
   <div mat-dialog-content>
     <p>{{msg}}</p>
   </div>
-  <button mat-button (click)="closeDialog()">Ok</button>
+  <button mat-raised-button class="btn" (click)="closeDialog()">Ok</button>
 </div>
 
 <div *ngIf="data.action == 'add'">
@@ -169,8 +169,13 @@
             </div>
             <div class="row">
               <div class="col">
+                <label for="category" ><h5>Category</h5></label> 
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="Category" formControlName="category" >
+                  <mat-select #category placeholder="Category">
+                    <mat-option value="men" >Men</mat-option>
+                    <mat-option value="women">Women</mat-option>
+                    <mat-option value="kids">Kids</mat-option>
+                  </mat-select>
                   <mat-error *ngIf="productForm.controls['category'].hasError('required')">
                     Category is <strong>required</strong>
                   </mat-error>
@@ -182,14 +187,30 @@
                 </mat-form-field>
               </div>
             </div>
+            <div class="row">
+              <mat-form-field class="full-width">
+                  <label for="stock" ><h5>Stock</h5></label> 
+                <input matInput type="number" ondrop="return false" onpaste="return false"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
+                  formControlName="stock" 
+                  #stock>
+                <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
+                  Stock is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
           </form>
         </mat-card-content>
     
         <mat-card-actions>
           <h5>Upload File</h5>
-            <input id="label_test" type="file" class="inputfile">
+            <input id="label_test" type="file" class="inputfile" ng2FileSelect [uploader]="uploader" required>
+            <div *ngFor="let item of uploader.queue"> <!--Upgrade to multiple files upload-->
+              <div>{{item.file.name}}</div>
+            </div>
+            
             <label  for="file" onclick="document.getElementById('label_test').click();"><mat-icon>cloud_upload</mat-icon></label>
-          <button mat-raised-button class="btn">Submit</button>
+          <button mat-raised-button class="btn" (click)="addProduct(category.value)">Submit</button>
           <button mat-button class="btn" (click)="closeDialog()">Cancel</button>
         </mat-card-actions>
     
@@ -229,7 +250,9 @@
             <mat-form-field class="full-width">
                 <label for="stock" ><h5>Stock</h5></label> 
               <input matInput value="{{data.stock }}" type="number" ondrop="return false" onpaste="return false"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="stock" #stock>
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
+                formControlName="stock" 
+                #stock>
               <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
                 Stock is <strong>required</strong>
               </mat-error>
@@ -253,7 +276,11 @@
           <div class="col">
             <mat-form-field class="full-width">
                 <label for="description" ><h5>Description</h5></label> 
-              <textarea rows= "4" matInput value="{{data.description }}" formControlName="description" #description></textarea>
+              <textarea rows= "4" 
+                        matInput 
+                        value="{{data.description }}" 
+                        formControlName="description" 
+                        #description></textarea>
             </mat-form-field>
           </div>
         </div>
@@ -262,7 +289,10 @@
 
     <mat-card-actions>
       <h5>Upload File</h5>
-        <input id="label_test" type="file" class="inputfile">
+      <input id="label_test" type="file" class="inputfile" ng2FileSelect [uploader]="uploader" required>
+      <div *ngFor="let item of uploader.queue"> <!--Upgrade to multiple files upload-->
+        <div>{{item.file.name}}</div>
+      </div>
         <label  for="file" onclick="document.getElementById('label_test').click();"><mat-icon>cloud_upload</mat-icon></label>
       <button mat-raised-button
               class="btn"
@@ -272,4 +302,126 @@
     </mat-card-actions>
 
   </mat-card>
+</div>
+
+<div *ngIf="data.action == 'guestOrder'">
+  <form [formGroup]="guestForm" novalidate 
+      (ngSubmit)="guestOrderSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="First name" formControlName="firstName" #firstname>
+            <mat-error *ngIf="guestForm.controls['firstName'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="guestForm.controls['firstName'].hasError('minlength') || 
+            guestForm.controls['firstName'].hasError('maxlength')">
+            First Name needs to be 3-16 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Last name" formControlName="lastName" #lastname>
+            <mat-error *ngIf="guestForm.controls['lastName'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="guestForm.controls['lastName'].hasError('minlength') || 
+            guestForm.controls['lastName'].hasError('maxlength')">
+            Last Name needs to be 3-16 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="data.method === 'House Delivery'">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Street" formControlName="street" #street></textarea>
+            <mat-error *ngIf="guestForm.controls['street'].hasError('required')">
+              Street is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Str. Number" type="number" ondrop="return false" onpaste="return false"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="number" #number>
+            <mat-error *ngIf="guestForm.controls['number'].hasError('required')">
+              Str. Number is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Postal Code" type="number" ondrop="return false" onpaste="return false"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="postalCode" #postalCode>
+            <mat-error *ngIf="guestForm.controls['postalCode'].hasError('required')">
+              Postal Code is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="guestForm.controls['postalCode'].hasError('minlength') ||
+                              guestForm.controls['postalCode'].hasError('maxlength')">
+              Postal Code must be <strong>5</strong> numbers.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="City" formControlName="city" #city>
+            <mat-error *ngIf="guestForm.controls['city'].hasError('required')">
+              City is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="email" matInput placeholder="E-mail" formControlName="email" email #email>
+            <mat-hint>
+              E-mail will be used for order confirmation.
+            </mat-hint>
+            <mat-error *ngIf="guestForm.controls['email'].hasError('email')">
+              E-mail is <strong>not valid</strong>
+            </mat-error>
+            <mat-error *ngIf="guestForm.controls['email'].hasError('required')">
+              E-mail is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button 
+              class="btn"
+              type="submit"
+              [disabled]="guestForm.invalid">Submit</button>
+              <button mat-button class="btn" (click)="closeDialog()">Cancel</button>   
+    </mat-card-actions>
+  </mat-card>
+</form>
+</div>
+
+<div *ngIf="data.action === 'changeOrderStatus'"  >
+  <form>
+      <mat-form-field class="full-width">
+          <mat-select #status placeholder="Change Status">
+            <mat-option value="On It's Way" >On It's Way</mat-option>
+            <mat-option value="Ready for pick-up">Ready for pick-up</mat-option>
+            <mat-option value="Completed">Completed</mat-option>
+            <mat-option value="Canceled">Canceled</mat-option>
+            <mat-option value="Confirmed">Confirmed</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button 
+              class="btn"
+              type="submit"
+              (click)="changeStatus(status.value)">Submit</button>
+              <button mat-button class="btn" (click)="closeDialog()">Cancel</button> 
+  </form>
 </div>

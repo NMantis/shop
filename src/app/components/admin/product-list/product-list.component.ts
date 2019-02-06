@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @Input() prods: Boolean;
 
+
   length: number;
   dataSource: Product[];
   pageSize = 10;
@@ -48,7 +49,6 @@ export class ProductListComponent implements OnInit {
     this.productService.getAll()
     .subscribe( data => {
       this.dataSource = data.products;
-      this.length = this.dataSource.length;
     });
   }
 

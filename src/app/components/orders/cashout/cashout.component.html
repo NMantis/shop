@@ -108,7 +108,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td *ngIf="dataSource.length">
+                    <!--    <td *ngIf="dataSource.length">
                             <mat-form-field>
                                 <mat-select placeholder="Address" name="address" [disabled]=" selected !== 'House Delivery'">
                                     <mat-option *ngFor="let address of dataSource" [value]="address.street">
@@ -116,14 +116,14 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </td>
+                        </td>  
                         <td *ngIf="!dataSource.length && selected === 'House Delivery'">
                             <mat-form-field class="underline">
                                 <mat-chip-list>
                                     <mat-chip class="chips" (click)="test()">Add Address</mat-chip>
                                 </mat-chip-list>
                             </mat-form-field>
-                        </td>
+                        </td> -->
                     </tr>
                 </table>
                 <table mat-table [dataSource]="products">
@@ -144,13 +144,7 @@
                     <ng-container matColumnDef="quantity">
                         <th mat-header-cell *matHeaderCellDef> Quantity </th>
                         <td mat-cell *matCellDef="let product">
-                            <button mat-icon-button (click)="updateCart(product, -1)">
-                                <mat-icon>remove</mat-icon>
-                            </button>
                             {{product.quantity}}
-                            <button mat-icon-button (click)="updateCart(product, 1)">
-                                <mat-icon>add</mat-icon>
-                            </button>
                         </td>
                         <td mat-footer-cell *matFooterCellDef> </td>
                     </ng-container>
@@ -171,7 +165,8 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button [disabled]="selected !== 'House Delivery' && selected !== 'Pick-up From Store'"
-                class="order-btn">
+                class="order-btn"
+                (click)="guestInfoDialog(method.value)">
                 Place Order</button>
             <button mat-raised-button class="order-btn" (click)="goBack()">Back</button>
         </mat-card-actions>

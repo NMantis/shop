@@ -56,7 +56,8 @@ export class ProductsComponent implements OnInit {
       this.cartCount = this.productToBeAdded.length;
       this.cartService.updateCount(this.cartCount);
       this.snackbar.open(`Product Added - Cart(${this.cartCount })`, 'OK', {
-        duration: 5000
+        duration: 5000,
+        panelClass: ['cart-snackbar']
       });
   }
 

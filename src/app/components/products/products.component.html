@@ -1,12 +1,12 @@
 <div class="flextest">
-    <ng-container *ngFor="let product of products">
+    <ng-container *ngFor="let product of products; let i = index">
     <mat-card >
       <mat-card-header>
         <mat-card-title>
           <h3> <a routerLink="/product/{{product._id}}"> {{product.name | uppercase}}</a></h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src='{{ product.productImage }}'>
+      <img mat-card-image [src] = "products[i].productImage | safe  ">
       <mat-card-content class="dashboard-card-content">
            {{ product.price | currency }} 
       </mat-card-content>

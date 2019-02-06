@@ -9,6 +9,7 @@ mat-card{
 .cartbutton {
   background-color: #680000;
   font-weight: 700;
+  color: #fff;
   width: 90%;
   
 }

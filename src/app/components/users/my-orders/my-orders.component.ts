@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import * as jwt_decode from 'jwt-decode';
 import { UserService } from 'src/app/services/user.service';
-import { Address } from 'src/app/models/address.model';
-import { ProductService } from 'src/app/services/product.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { Order } from '../../../models/order.model';
-import { OrderList } from '../../../models/orderlist.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Product } from 'src/app/models/product.model';
 
@@ -43,14 +40,6 @@ export class MyOrdersComponent implements OnInit {
     }
   }
 
-  getAddress(id) {
-    let address;
-    this.userService.getAddressById(id)
-    .subscribe(adr => {
-       address = adr.street + '' + adr.number;
-    });
-    return address;
-  }
 
 }
 

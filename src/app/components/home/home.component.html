@@ -18,7 +18,7 @@
               <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
               </button>
-              <span>Shoe-Shop</span>
+              <a routerLink="/home" style="font-size: 24px"> Shoe-Shop</a>
               <span class="spacer"></span>
       
               <button mat-raised-button 
@@ -49,7 +49,7 @@
             </mat-toolbar>
            
             <div class="bd">
-              <router-outlet></router-outlet>
+              <router-outlet ></router-outlet>
             </div>
       
           </mat-sidenav-content>

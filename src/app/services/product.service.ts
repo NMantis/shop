@@ -23,14 +23,14 @@ export class ProductService {
     return this.http.get<any>(`${this.uri}/product/all`);
   }
 
-  addProduct(name, description, price, productImage, category) {
+  addProduct(name, description, price, category, stock, path) {
     const product = {
       name: name,
       description: description,
       price: price,
-      productImage: productImage,
-      active: true,
-      category: category
+      path: path,
+      category: category,
+      stock: stock
     };
     return this.http.post<any>(`${this.uri}/product/`, product);
   }

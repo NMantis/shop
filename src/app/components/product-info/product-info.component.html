@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-content class="dashboard-car">
       <mat-grid-tile>
-        <div><img src='{{ product.productImage }}' width="300 px" max-height="268 px"></div>
+        <div><img [src]="product.productImage | safe" width="300 px" max-height="268 px"></div>
       </mat-grid-tile>
 
       <mat-grid-tile>
